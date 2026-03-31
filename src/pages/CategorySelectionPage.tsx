@@ -1,16 +1,16 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { categories } from '../data/flashcards'
 import styles from './CategorySelectionPage.module.css'
 
 type Mode = 'study' | 'quiz'
 
-function parseMode(value: string | null): Mode {
-  return value === 'quiz' ? 'quiz' : 'study'
+function modeFromPathname(pathname: string): Mode {
+  return pathname.startsWith('/quiz') ? 'quiz' : 'study'
 }
 
 export function CategorySelectionPage() {
-  const [searchParams] = useSearchParams()
-  const mode = parseMode(searchParams.get('mode'))
+  const { pathname } = useLocation()
+  const mode = modeFromPathname(pathname)
 
   return (
     <main className={styles.page}>
