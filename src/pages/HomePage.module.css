@@ -29,6 +29,63 @@
   max-width: 62ch;
 }
 
+.redoBanner {
+  max-width: 920px;
+  width: 100%;
+  margin: 0 auto 20px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  background: rgba(239, 246, 255, 0.85);
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.06);
+}
+
+.redoText {
+  margin: 0 0 12px;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+.redoActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.redoLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.redoLink:hover {
+  background: #1d4ed8;
+}
+
+.clearBtn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: #fff;
+  color: #475569;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.clearBtn:hover {
+  border-color: rgba(15, 23, 42, 0.28);
+  color: #0f172a;
+}
+
 .actions {
   max-width: 920px;
   width: 100%;

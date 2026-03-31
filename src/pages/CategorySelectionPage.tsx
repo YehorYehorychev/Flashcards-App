@@ -1,57 +1,22 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { categories } from '../data/flashcards'
 import styles from './CategorySelectionPage.module.css'
 
-type Mode = 'study' | 'quiz'
-
-function parseMode(value: string | null): Mode {
-  return value === 'quiz' ? 'quiz' : 'study'
-}
-
 export function CategorySelectionPage() {
-  const [searchParams] = useSearchParams()
-  const mode = parseMode(searchParams.get('mode'))
-
   return (
     <main className={styles.page}>
       <header className={styles.header}>
         <h1 className={styles.title}>Choose a category</h1>
-        <p className={styles.subtitle}>
-          Mode: <strong>{mode === 'study' ? 'Study' : 'Quiz'}</strong>
-        </p>
-        <div className={styles.modeSwitch} role="navigation" aria-label="Mode">
-          <Link
-            className={mode === 'study' ? styles.modeActive : styles.modeLink}
-            to="/study"
-          >
-            Study
-          </Link>
-          <Link
-            className={mode === 'quiz' ? styles.modeActive : styles.modeLink}
-            to="/quiz"
-          >
-            Quiz
-          </Link>
-        </div>
+        <p className={styles.subtitle}>Study mode — flip cards and mark right or wrong.</p>
       </header>
 
       <section className={styles.grid} aria-label="Categories">
-        {categories.map((c) => {
-          const to =
-            mode === 'study'
-              ? `/study/${c.id}`
-              : `/quiz/${c.id}?type=multiple-choice`
-          return (
-            <Link key={c.id} className={styles.card} to={to}>
-              <h2 className={styles.cardTitle}>{c.label}</h2>
-              <p className={styles.cardBody}>
-                {mode === 'study'
-                  ? 'Start a study session'
-                  : 'Start a quiz (placeholder)'}
-              </p>
-            </Link>
-          )
-        })}
+        {categories.map((c) => (
+          <Link key={c.id} className={styles.card} to={`/study/${c.id}`}>
+            <h2 className={styles.cardTitle}>{c.label}</h2>
+            <p className={styles.cardBody}>Start a study session</p>
+          </Link>
+        ))}
       </section>
 
       <footer className={styles.footer}>
@@ -62,4 +27,3 @@ export function CategorySelectionPage() {
     </main>
   )
 }
-
