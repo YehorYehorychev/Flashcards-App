@@ -1,0 +1,119 @@
+export type Category = 'animals' | 'food' | 'verbs'
+
+export type Quiz =
+  | {
+      type: 'multiple-choice'
+      options: [string, string, string, string]
+    }
+  | {
+      type: 'fill-in-the-blank'
+    }
+
+export type Flashcard = {
+  id: string
+  category: Category
+  ukranian: string
+  english: string
+  quiz: Quiz
+}
+
+export const categories: { id: Category; label: string }[] = [
+  { id: 'animals', label: 'Animals' },
+  { id: 'food', label: 'Food' },
+  { id: 'verbs', label: 'Verbs' },
+]
+
+export const flashcards: Flashcard[] = [
+  {
+    id: 'animals-kot',
+    category: 'animals',
+    ukranian: 'кіт',
+    english: 'the cat',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['the cat', 'the dog', 'the bird', 'the fish'],
+    },
+  },
+  {
+    id: 'animals-sobaka',
+    category: 'animals',
+    ukranian: 'собака',
+    english: 'the dog',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['the horse', 'the dog', 'the cow', 'the rabbit'],
+    },
+  },
+  {
+    id: 'animals-ptah',
+    category: 'animals',
+    ukranian: 'птах',
+    english: 'the bird',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'food-hlib',
+    category: 'food',
+    ukranian: 'хліб',
+    english: 'bread',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['milk', 'bread', 'cheese', 'water'],
+    },
+  },
+  {
+    id: 'food-moloko',
+    category: 'food',
+    ukranian: 'молоко',
+    english: 'milk',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['milk', 'tea', 'coffee', 'juice'],
+    },
+  },
+  {
+    id: 'food-yabluko',
+    category: 'food',
+    ukranian: 'яблуко',
+    english: 'apple',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'verbs-chytaty',
+    category: 'verbs',
+    ukranian: 'читати',
+    english: 'to read',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['to write', 'to read', 'to run', 'to speak'],
+    },
+  },
+  {
+    id: 'verbs-tydty',
+    category: 'verbs',
+    ukranian: 'йти',
+    english: 'to go',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['to go', 'to eat', 'to sleep', 'to think'],
+    },
+  },
+  {
+    id: 'verbs-govoryty',
+    category: 'verbs',
+    ukranian: 'говорити',
+    english: 'to speak',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+]
+
+export function flashcardsByCategory(category: Category): Flashcard[] {
+  return flashcards.filter((c) => c.category === category)
+}
+
