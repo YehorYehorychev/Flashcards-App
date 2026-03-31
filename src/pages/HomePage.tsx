@@ -12,7 +12,7 @@ export function HomePage() {
         </p>
       </section>
 
-      <section className={styles.actions} aria-label="Primary navigation">
+      <nav className={styles.actions} aria-label="Primary navigation">
         <Link className={styles.cardLink} to="/study">
           <h2 className={styles.cardTitle}>Study Mode</h2>
           <p className={styles.cardBody}>Flip cards and mark right/wrong.</p>
@@ -25,7 +25,7 @@ export function HomePage() {
           <h2 className={styles.cardTitle}>Stats</h2>
           <p className={styles.cardBody}>See your progress over time.</p>
         </Link>
-      </section>
+      </nav>
     </main>
   )
 }
