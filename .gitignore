@@ -7,24 +7,40 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Vite build output (spec: static front-end, no backend)
 dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# Local env (secrets, machine-specific — not used by static data yet, but common with Vite)
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Test / coverage
+coverage
+.eslintcache
+
+# Playwright (E2E — reports and traces are regenerated locally / in CI)
+/playwright-report/
+/test-results/
+/blob-report/
+/playwright/.cache/
+
+# Editor / OS
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-# Playwright
-/playwright-report/
-/test-results/
-/blob-report/
-/playwright/.cache/
