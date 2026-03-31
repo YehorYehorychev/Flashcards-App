@@ -21,14 +21,18 @@ test.describe('Home', () => {
     await expect(
       page.getByRole('heading', { name: 'Choose a category', level: 1 }),
     ).toBeVisible()
-    await expect(page.getByText('Mode: Study')).toBeVisible()
+    await expect(
+      page.getByText(/Study mode — flip cards/i),
+    ).toBeVisible()
   })
 
-  test('navigates to quiz category selection', async ({ page }) => {
+  test('navigates to quiz selection', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('link', { name: /Quiz Mode/i }).click()
     await expect(page).toHaveURL(/\/quiz$/)
-    await expect(page.getByText('Mode: Quiz')).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'Quiz', level: 1 }),
+    ).toBeVisible()
   })
 
   test('navigates to stats page', async ({ page }) => {
@@ -137,10 +141,57 @@ test.describe('Study mode', () => {
   })
 })
 
-test.describe('Quiz mode (static shell)', () => {
-  test('category links target quiz routes', async ({ page }) => {
+test.describe('Quiz mode', () => {
+  test('category links include quiz type and render questions', async ({
+    page,
+  }) => {
     await page.goto('/quiz')
     await page.getByRole('link', { name: /Food/i }).click()
     await expect(page).toHaveURL(/\/quiz\/food/)
+    await expect(page).toHaveURL(/type=multiple-choice/)
+
+    await expect(page.getByRole('heading', { name: /Question 1 of 2/ })).toBeVisible()
+    await expect(page.getByText('хліб', { exact: true })).toBeVisible()
+    await page.getByRole('button', { name: 'bread' }).click()
+    await expect(page.getByText('Correct!')).toBeVisible()
+    await page.getByRole('button', { name: /Next question/i }).click()
+
+    await expect(page.getByRole('heading', { name: /Question 2 of 2/ })).toBeVisible()
+    await page.getByRole('button', { name: 'milk' }).click()
+    await page.getByRole('button', { name: /Finish/i }).click()
+    await expect(
+      page.getByRole('heading', { name: 'Quiz complete', level: 1 }),
+    ).toBeVisible()
+  })
+
+  test('fill-in-the-blank is case-insensitive', async ({ page }) => {
+    await page.goto('/quiz')
+    await page.getByRole('button', { name: /Fill in the blank/i }).click()
+    await page.getByRole('link', { name: /Animals/i }).click()
+    await expect(page).toHaveURL(/\/quiz\/animals/)
+    await expect(page).toHaveURL(/type=fill-in-the-blank/)
+
+    await expect(page.getByText('птах', { exact: true })).toBeVisible()
+    await page.getByPlaceholder(/English translation/i).fill('THE BIRD')
+    await page.getByRole('button', { name: /Check answer/i }).click()
+    await expect(page.getByText(/Correct/i)).toBeVisible()
+  })
+})
+
+test.describe('Stats', () => {
+  test('shows overall section after activity', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.removeItem('flashcards-app-progress-v1')
+    })
+    await page.goto('/study/food')
+    await page
+      .getByRole('button', { name: 'Show English translation' })
+      .click()
+    await page.getByRole('button', { name: /got it right/i }).click()
+
+    await page.goto('/stats')
+    await expect(page.getByText('Overall')).toBeVisible()
+    await expect(page.getByText('By category')).toBeVisible()
+    await expect(page.getByText('Food').first()).toBeVisible()
   })
 })
