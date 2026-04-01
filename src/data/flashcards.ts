@@ -1,4 +1,4 @@
-export type Category = 'animals' | 'food' | 'verbs'
+export type Category = 'animals' | 'food' | 'verbs' | 'colors'
 
 export type Quiz =
   | {
@@ -21,6 +21,7 @@ export const categories: { id: Category; label: string }[] = [
   { id: 'animals', label: 'Animals' },
   { id: 'food', label: 'Food' },
   { id: 'verbs', label: 'Verbs' },
+  { id: 'colors', label: 'Colors' },
 ]
 
 export const flashcards: Flashcard[] = [
@@ -264,6 +265,64 @@ export const flashcards: Flashcard[] = [
     quiz: {
       type: 'multiple-choice',
       options: ['to think', 'to know', 'to feel', 'to believe'],
+    },
+  },
+  {
+    id: 'colors-bilyy',
+    category: 'colors',
+    ukranian: 'білий',
+    english: 'white',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['white', 'black', 'red', 'green'],
+    },
+  },
+  {
+    id: 'colors-chornyy',
+    category: 'colors',
+    ukranian: 'чорний',
+    english: 'black',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['black', 'white', 'grey', 'brown'],
+    },
+  },
+  {
+    id: 'colors-chervonyy',
+    category: 'colors',
+    ukranian: 'червоний',
+    english: 'red',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'colors-zelenyy',
+    category: 'colors',
+    ukranian: 'зелений',
+    english: 'green',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['green', 'yellow', 'blue', 'red'],
+    },
+  },
+  {
+    id: 'colors-syniy',
+    category: 'colors',
+    ukranian: 'синій',
+    english: 'blue',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'colors-zhovtyy',
+    category: 'colors',
+    ukranian: 'жовтий',
+    english: 'yellow',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['yellow', 'orange', 'green', 'white'],
     },
   },
 ]

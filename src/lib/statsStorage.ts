@@ -29,6 +29,7 @@ export function defaultProgress(): PersistedProgress {
       animals: emptyCategory(),
       food: emptyCategory(),
       verbs: emptyCategory(),
+      colors: emptyCategory(),
     },
     lastSessionWrongIds: [],
   }
@@ -56,10 +57,12 @@ function parseProgress(raw: string | null): PersistedProgress {
     const animals = (by as Record<string, unknown>).animals
     const food = (by as Record<string, unknown>).food
     const verbs = (by as Record<string, unknown>).verbs
+    const colors = (by as Record<string, unknown>).colors
     if (
       !isCategoryStats(animals) ||
       !isCategoryStats(food) ||
-      !isCategoryStats(verbs)
+      !isCategoryStats(verbs) ||
+      !isCategoryStats(colors)
     ) {
       return defaultProgress()
     }
@@ -69,7 +72,7 @@ function parseProgress(raw: string | null): PersistedProgress {
       : []
     return {
       v: 1,
-      byCategory: { animals, food, verbs },
+      byCategory: { animals, food, verbs, colors },
       lastSessionWrongIds,
     }
   } catch {
