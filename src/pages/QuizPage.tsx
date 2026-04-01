@@ -7,7 +7,7 @@ import { shuffled } from '../lib/shuffle'
 import styles from './QuizPage.module.css'
 
 function isCategory(value: string | undefined): value is Category {
-  return value === 'animals' || value === 'food' || value === 'verbs'
+  return value === 'animals' || value === 'food' || value === 'verbs' || value === 'colors'
 }
 
 function quizTypeFromParam(value: string | null): Quiz['type'] | null {

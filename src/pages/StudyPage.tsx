@@ -7,7 +7,7 @@ import { categories, flashcardsByCategory } from '../data/flashcards'
 import styles from './StudyPage.module.css'
 
 function isCategory(value: string | undefined): value is Category {
-  return value === 'animals' || value === 'food' || value === 'verbs'
+  return value === 'animals' || value === 'food' || value === 'verbs' || value === 'colors'
 }
 
 export function StudyPage() {
