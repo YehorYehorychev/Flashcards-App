@@ -208,6 +208,64 @@ export const flashcards: Flashcard[] = [
       type: 'fill-in-the-blank',
     },
   },
+  {
+    id: 'verbs-pysaty',
+    category: 'verbs',
+    ukranian: 'писати',
+    english: 'to write',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['to write', 'to read', 'to speak', 'to listen'],
+    },
+  },
+  {
+    id: 'verbs-pyty',
+    category: 'verbs',
+    ukranian: 'пити',
+    english: 'to drink',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['to drink', 'to eat', 'to cook', 'to sleep'],
+    },
+  },
+  {
+    id: 'verbs-isty',
+    category: 'verbs',
+    ukranian: 'їсти',
+    english: 'to eat',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'verbs-bihaty',
+    category: 'verbs',
+    ukranian: 'бігати',
+    english: 'to run',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['to run', 'to walk', 'to jump', 'to stand'],
+    },
+  },
+  {
+    id: 'verbs-spaty',
+    category: 'verbs',
+    ukranian: 'спати',
+    english: 'to sleep',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'verbs-dumaty',
+    category: 'verbs',
+    ukranian: 'думати',
+    english: 'to think',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['to think', 'to know', 'to feel', 'to believe'],
+    },
+  },
 ]
 
 export function flashcardsByCategory(category: Category): Flashcard[] {
