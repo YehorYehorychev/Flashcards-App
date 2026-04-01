@@ -54,6 +54,45 @@ export const flashcards: Flashcard[] = [
     },
   },
   {
+    id: 'animals-kin',
+    category: 'animals',
+    ukranian: 'кінь',
+    english: 'the horse',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['the horse', 'the cow', 'the pig', 'the sheep'],
+    },
+  },
+  {
+    id: 'animals-svynya',
+    category: 'animals',
+    ukranian: 'свиня',
+    english: 'the pig',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['the pig', 'the dog', 'the chicken', 'the cat'],
+    },
+  },
+  {
+    id: 'animals-ryba',
+    category: 'animals',
+    ukranian: 'риба',
+    english: 'the fish',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'animals-vedmid',
+    category: 'animals',
+    ukranian: 'ведмідь',
+    english: 'the bear',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['the bear', 'the wolf', 'the fox', 'the rabbit'],
+    },
+  },
+  {
     id: 'food-hlib',
     category: 'food',
     ukranian: 'хліб',
