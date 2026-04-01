@@ -85,17 +85,21 @@ test.describe('Study mode', () => {
     await expect(page.getByRole('heading', { name: /Card 2 of \d+/ })).toBeVisible()
     await expect(page.getByText('молоко', { exact: true })).toBeVisible()
 
-    await page
-      .getByRole('button', { name: 'Show English translation' })
-      .click()
+    await page.getByRole('button', { name: 'Show English translation' }).click()
     await page.getByRole('button', { name: /got it right/i }).click()
 
     await expect(page.getByRole('heading', { name: /Card 3 of \d+/ })).toBeVisible()
     await expect(page.getByText('яблуко', { exact: true })).toBeVisible()
-    await page
-      .getByRole('button', { name: 'Show English translation' })
-      .click()
+    await page.getByRole('button', { name: 'Show English translation' }).click()
     await page.getByRole('button', { name: /got it right/i }).click()
+
+    // Finish the rest of the dynamic deck
+    let isComplete = false
+    while (!isComplete && await page.getByRole('button', { name: 'Show English translation' }).isVisible()) {
+        await page.getByRole('button', { name: 'Show English translation' }).click()
+        await page.getByRole('button', { name: /got it right/i }).click()
+        isComplete = await page.getByRole('heading', { name: 'Session complete', level: 1 }).isVisible()
+    }
 
     await expect(
       page.getByRole('heading', { name: 'Session complete', level: 1 }),

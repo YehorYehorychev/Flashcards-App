@@ -122,6 +122,64 @@ export const flashcards: Flashcard[] = [
     },
   },
   {
+    id: 'food-myaso',
+    category: 'food',
+    ukranian: 'м\'ясо',
+    english: 'meat',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['meat', 'bread', 'apple', 'fish'],
+    },
+  },
+  {
+    id: 'food-syr',
+    category: 'food',
+    ukranian: 'сир',
+    english: 'cheese',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['cheese', 'milk', 'water', 'tea'],
+    },
+  },
+  {
+    id: 'food-voda',
+    category: 'food',
+    ukranian: 'вода',
+    english: 'water',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'food-chay',
+    category: 'food',
+    ukranian: 'чай',
+    english: 'tea',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['tea', 'coffee', 'juice', 'milk'],
+    },
+  },
+  {
+    id: 'food-kava',
+    category: 'food',
+    ukranian: 'кава',
+    english: 'coffee',
+    quiz: {
+      type: 'fill-in-the-blank',
+    },
+  },
+  {
+    id: 'food-sik',
+    category: 'food',
+    ukranian: 'сік',
+    english: 'juice',
+    quiz: {
+      type: 'multiple-choice',
+      options: ['juice', 'water', 'tea', 'milk'],
+    },
+  },
+  {
     id: 'verbs-chytaty',
     category: 'verbs',
     ukranian: 'читати',
