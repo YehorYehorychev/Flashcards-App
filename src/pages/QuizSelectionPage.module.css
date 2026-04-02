@@ -1,105 +1,145 @@
 .page {
-  min-height: 100vh;
-  padding: 28px 20px 40px;
-  color: #0b1220;
-  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 60%);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px;
+  align-items: center;
 }
 
 .header {
-  max-width: 920px;
-  margin: 0 auto 16px;
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 32px;
+  animation: slideDown var(--transition-normal);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .title {
-  margin: 0 0 6px;
-  font-size: 28px;
+  margin: 0 0 12px;
+  font-size: clamp(32px, 5vw, 48px);
+  color: var(--color-primary);
+  text-shadow: 0 2px 0 var(--color-primary-shadow);
   letter-spacing: -0.02em;
 }
 
 .subtitle {
-  margin: 0 0 12px;
-  color: #475569;
+  margin: 0 0 24px;
+  font-size: 18px;
+  color: var(--color-text-muted);
 }
 
 .typeToggle {
   display: inline-flex;
-  border: 1px solid rgba(15, 23, 42, 0.14);
-  border-radius: 999px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  background: #fff;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .typeBtn {
-  padding: 10px 14px;
+  padding: 12px 20px;
   text-decoration: none;
-  color: #0f172a;
-  font-weight: 600;
-  font-size: 14px;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  font-size: 15px;
   border: none;
   background: transparent;
   cursor: pointer;
   font-family: inherit;
+  transition: all 0.2s ease;
 }
 
 .typeBtn:hover {
-  background: rgba(15, 23, 42, 0.04);
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 .typeBtnActive {
-  composes: typeBtn;
-  background: #0f172a;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  background: var(--color-primary);
   color: #fff;
+  transition: all 0.2s ease;
 }
 
 .typeBtnActive:hover {
-  background: #0f172a;
+  filter: brightness(1.05);
 }
 
 .grid {
-  max-width: 920px;
-  margin: 0 auto;
+  max-width: 900px;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
 }
 
 .card {
   text-decoration: none;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s, border-color 0.2s;
   color: inherit;
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 14px;
-  padding: 16px;
-  background: #fff;
-  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.06);
-  transition:
-    transform 120ms ease,
-    box-shadow 120ms ease,
-    border-color 120ms ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideUp var(--transition-normal) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 34px rgba(2, 6, 23, 0.1);
-  border-color: rgba(37, 99, 235, 0.25);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-primary);
+  border-color: var(--color-primary);
+}
+
+.cardIcon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  transition: transform 0.3s;
+}
+
+.card:hover .cardIcon {
+  transform: scale(1.15) rotate(10deg);
 }
 
 .cardTitle {
-  margin: 0 0 6px;
-  font-size: 18px;
+  margin: 0 0 4px;
+  font-size: 20px;
+  color: var(--color-text);
 }
 
 .cardBody {
   margin: 0;
-  color: #475569;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  font-weight: 500;
 }
 
 .footer {
-  max-width: 920px;
-  margin: 18px auto 0;
-}
-
-.back {
-  color: #2563eb;
-  text-decoration: none;
-  font-weight: 600;
+  max-width: 900px;
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
 }
