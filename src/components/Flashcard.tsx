@@ -18,7 +18,7 @@ export function Flashcard({
   onWrong,
 }: FlashcardProps) {
   return (
-    <div className={styles.wrap}>
+    <div className={styles.wrap} key={ukranian}> {/* Add key to force re-animation when changing words */}
       <button
         type="button"
         className={styles.flipOuter}
@@ -42,11 +42,11 @@ export function Flashcard({
 
       {isFlipped && onRight && onWrong ? (
         <div className={styles.actions} role="group" aria-label="Mark your answer">
-          <button type="button" className={styles.btnRight} onClick={onRight}>
-            ✅ I got it right
+          <button type="button" className={`btn-gamified btn-success ${styles.btnRight}`} onClick={onRight}>
+            Got it right
           </button>
-          <button type="button" className={styles.btnWrong} onClick={onWrong}>
-            ❌ I got it wrong
+          <button type="button" className={`btn-gamified btn-danger ${styles.btnWrong}`} onClick={onWrong}>
+            Got it wrong
           </button>
         </div>
       ) : null}
