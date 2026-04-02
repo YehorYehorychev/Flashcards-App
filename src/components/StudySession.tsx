@@ -34,6 +34,9 @@ export function StudySession({
 
   const current = cards[index]
   const finished = cards.length > 0 && index >= cards.length
+  
+  // Calculate progress percentage
+  const progressPercent = cards.length > 0 ? (index / cards.length) * 100 : 0
 
   const goNext = (wasWrong: boolean) => {
     if (!current) return
@@ -46,8 +49,9 @@ export function StudySession({
       setWrongIds(nextWrongIds)
     }
     const nextIndex = index + 1
-    setIndex(nextIndex)
+    
     setIsFlipped(false)
+    setIndex(nextIndex)
     if (nextIndex >= cards.length) {
       onSessionFinished(nextWrongIds)
     }
@@ -68,7 +72,7 @@ export function StudySession({
     return (
       <main className={styles.page}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Session complete</h1>
+          <h1 className={styles.title}>Session complete! 🎉</h1>
           <p className={styles.subtitle}>
             {categoryLabel}: you reviewed {cards.length} card
             {cards.length === 1 ? '' : 's'}.
@@ -76,26 +80,32 @@ export function StudySession({
         </header>
         <section className={styles.summary}>
           <p>
-            <strong>{wrongIds.length}</strong> marked wrong this round.
+            <strong>{cards.length - wrongIds.length}</strong> correct
+          </p>
+          <p>
+            <strong>{wrongIds.length}</strong> to review again
           </p>
           {wrongIds.length > 0 ? (
             <p className={styles.muted}>
-              Use Redo on the home screen to practice only those cards, or clear
-              the list anytime.
+              You can review these mistakes from the home screen using the Redo button.
             </p>
-          ) : null}
+          ) : (
+            <p className={styles.muted}>
+              Perfect score! Awesome job! 🚀
+            </p>
+          )}
         </section>
         <footer className={styles.footer}>
           {wrongIds.length > 0 ? (
             <Link className={styles.link} to="/study/redo">
-              Redo wrong cards
+              Review Mistakes Now
             </Link>
           ) : null}
           <Link className={styles.link} to="/study">
             Study another category
           </Link>
           <Link className={styles.linkMuted} to="/">
-            Home
+            Back Home
           </Link>
         </footer>
       </main>
@@ -105,7 +115,14 @@ export function StudySession({
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        {crumb ? <p className={styles.crumb}>{crumb}</p> : null}
+        <div className={styles.topBar}>
+           {crumb ? <p className={styles.crumb}>{crumb}</p> : null}
+        </div>
+        
+        <div className={styles.progressContainer}>
+            <div className={styles.progressBar} style={{ width: `${progressPercent}%` }}></div>
+        </div>
+        
         <h1 className={styles.title}>
           Card {index + 1} of {cards.length}
         </h1>

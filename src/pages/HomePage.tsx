@@ -8,30 +8,32 @@ export function HomePage() {
 
   return (
     <main className={styles.page}>
-      <section className={styles.hero}>
-        <h1 className={styles.title}>Ukrainian Flashcards</h1>
+      <header className={styles.hero}>
+        <h1 className={styles.title}>Ukrainian Flashcards 🇺🇦</h1>
         <p className={styles.subtitle}>
-          Study Ukrainian vocabulary by category, drill quizzes, and track
-          accuracy over time.
+          Learn new words, review your mistakes, and see your progress grow!
         </p>
-      </section>
+      </header>
 
       {redoCount > 0 ? (
         <section className={styles.redoBanner} aria-label="Redo session">
-          <p className={styles.redoText}>
-            You have <strong>{redoCount}</strong> card
-            {redoCount === 1 ? '' : 's'} marked wrong in your last session.
-          </p>
+          <div className={styles.redoContent}>
+            <span className={styles.redoIcon}>🚨</span>
+            <p className={styles.redoText}>
+              You have <strong>{redoCount}</strong> card
+              {redoCount === 1 ? '' : 's'} to review from last time!
+            </p>
+          </div>
           <div className={styles.redoActions}>
-            <Link className={styles.redoLink} to="/study/redo">
-              Redo wrong cards
+            <Link className="btn-gamified btn-warning" to="/study/redo">
+              Review Now
             </Link>
             <button
               type="button"
-              className={styles.clearBtn}
+              className="btn-gamified btn-outline"
               onClick={clearWrongCardList}
             >
-              Clear wrong list
+              Skip
             </button>
           </div>
         </section>
@@ -39,16 +41,19 @@ export function HomePage() {
 
       <nav className={styles.actions} aria-label="Primary navigation">
         <Link className={styles.cardLink} to="/study">
+          <div className={styles.cardIcon}>📚</div>
           <h2 className={styles.cardTitle}>Study Mode</h2>
-          <p className={styles.cardBody}>Flip cards and mark right/wrong.</p>
+          <p className={styles.cardBody}>Flip cards and learn at your own pace.</p>
         </Link>
         <Link className={styles.cardLink} to="/quiz">
+          <div className={styles.cardIcon}>🎮</div>
           <h2 className={styles.cardTitle}>Quiz Mode</h2>
-          <p className={styles.cardBody}>Multiple choice or fill in the blank.</p>
+          <p className={styles.cardBody}>Test your memory and score points!</p>
         </Link>
         <Link className={styles.cardLink} to="/stats">
-          <h2 className={styles.cardTitle}>Stats</h2>
-          <p className={styles.cardBody}>See your progress over time.</p>
+          <div className={styles.cardIcon}>📈</div>
+          <h2 className={styles.cardTitle}>Your Stats</h2>
+          <p className={styles.cardBody}>Track your accuracy and progress.</p>
         </Link>
       </nav>
     </main>

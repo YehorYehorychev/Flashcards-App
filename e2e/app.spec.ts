@@ -40,7 +40,7 @@ test.describe('Home', () => {
     await page.getByRole('link', { name: /Stats/i }).click()
     await expect(page).toHaveURL(/\/stats$/)
     await expect(
-      page.getByRole('heading', { name: 'Statistics', level: 1 }),
+      page.getByRole('heading', { name: /Stats/, level: 1 }),
     ).toBeVisible()
   })
 })
@@ -93,18 +93,17 @@ test.describe('Study mode', () => {
     await page.getByRole('button', { name: 'Show English translation' }).click()
     await page.getByRole('button', { name: /got it right/i }).click()
 
-    // Finish the rest of the dynamic deck
     let isComplete = false
     while (!isComplete && await page.getByRole('button', { name: 'Show English translation' }).isVisible()) {
         await page.getByRole('button', { name: 'Show English translation' }).click()
         await page.getByRole('button', { name: /got it right/i }).click()
-        isComplete = await page.getByRole('heading', { name: 'Session complete', level: 1 }).isVisible()
+        isComplete = await page.getByRole('heading', { name: /Session complete/i, level: 1 }).isVisible()
     }
 
     await expect(
-      page.getByRole('heading', { name: 'Session complete', level: 1 }),
+      page.getByRole('heading', { name: /Session complete/i, level: 1 }),
     ).toBeVisible()
-    await expect(page.getByText(/0.*marked wrong this round/i)).toBeVisible()
+    await expect(page.getByText(/0.*to review again/i)).toBeVisible()
   })
 
   test('counts wrong answers on session summary', async ({ page }) => {
@@ -122,9 +121,9 @@ test.describe('Study mode', () => {
     }
 
     await expect(
-      page.getByRole('heading', { name: 'Session complete', level: 1 }),
+      page.getByRole('heading', { name: /Session complete/i, level: 1 }),
     ).toBeVisible()
-    await expect(page.getByText(/1.*marked wrong this round/i)).toBeVisible()
+    await expect(page.getByText(/1.*to review again/i)).toBeVisible()
   })
 
   test('unknown category shows error and link back', async ({ page }) => {
@@ -153,10 +152,10 @@ test.describe('Quiz mode', () => {
     await expect(page.getByRole('heading', { name: /Question 1 of \d+/ })).toBeVisible()
     await expect(page.getByText('хліб', { exact: true })).toBeVisible()
     await page.getByRole('button', { name: 'bread' }).click()
-    await expect(page.getByText('Correct!')).toBeVisible()
+    await expect(page.getByText(/Correct/i)).toBeVisible()
 
     let nextBtn = await page.getByRole('button', { name: /Next question|Finish/i })
-    while (await nextBtn.textContent() !== 'Finish') {
+    while (await nextBtn.textContent() !== 'Finish Quiz') {
         await nextBtn.click()
         // Click the first multiple choice option (which is the first button inside the main section that isn't the submit button)
         await page.locator('[role="group"] button').first().click()
@@ -165,7 +164,7 @@ test.describe('Quiz mode', () => {
     await nextBtn.click()
     
     await expect(
-      page.getByRole('heading', { name: 'Quiz complete', level: 1 }),
+      page.getByRole('heading', { name: /Quiz complete/i, level: 1 }),
     ).toBeVisible()
   })
 
@@ -195,8 +194,8 @@ test.describe('Stats', () => {
     await page.getByRole('button', { name: /got it right/i }).click()
 
     await page.goto('/stats')
-    await expect(page.getByText('Overall')).toBeVisible()
-    await expect(page.getByText('By category')).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Overall/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /By category/i })).toBeVisible()
     await expect(page.getByText('Food').first()).toBeVisible()
   })
 })

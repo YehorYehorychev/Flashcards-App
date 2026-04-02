@@ -5,15 +5,21 @@ import styles from './QuizSelectionPage.module.css'
 
 type QuizTypeParam = 'multiple-choice' | 'fill-in-the-blank'
 
+const categoryIcons: Record<string, string> = {
+  animals: '🐶',
+  food: '🍎',
+  verbs: '🏃',
+}
+
 export function QuizSelectionPage() {
   const [quizType, setQuizType] = useState<QuizTypeParam>('multiple-choice')
 
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Quiz</h1>
+        <h1 className={styles.title}>Quiz Time!</h1>
         <p className={styles.subtitle}>
-          Pick a format, then a category to start.
+          Pick a format, then a category to start scoring points.
         </p>
         <div className={styles.typeToggle} role="group" aria-label="Quiz type">
           <button
@@ -42,15 +48,16 @@ export function QuizSelectionPage() {
       </header>
 
       <section className={styles.grid} aria-label="Categories">
-        {categories.map((c) => {
+        {categories.map((c, index) => {
           const search = new URLSearchParams({ type: quizType }).toString()
           const to = `/quiz/${c.id}?${search}`
           return (
-            <Link key={c.id} className={styles.card} to={to}>
+            <Link key={c.id} className={styles.card} style={{ animationDelay: `${index * 100}ms` }} to={to}>
+               <div className={styles.cardIcon}>{categoryIcons[c.id] || '✨'}</div>
               <h2 className={styles.cardTitle}>{c.label}</h2>
               <p className={styles.cardBody}>
                 {quizType === 'multiple-choice'
-                  ? 'Four English options per Ukrainian prompt'
+                  ? 'Four English options per Ukrainian word'
                   : 'Type the English translation'}
               </p>
             </Link>
@@ -59,7 +66,7 @@ export function QuizSelectionPage() {
       </section>
 
       <footer className={styles.footer}>
-        <Link className={styles.back} to="/">
+        <Link className="btn-gamified btn-outline" to="/">
           ← Back home
         </Link>
       </footer>

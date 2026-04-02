@@ -2,9 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
+  animation: scaleIn var(--transition-normal) var(--spring-bounce);
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .flipOuter {
@@ -13,24 +19,25 @@
   border: none;
   padding: 0;
   background: transparent;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   outline: none;
   font: inherit;
   text-align: inherit;
   display: block;
+  perspective: 1000px;
 }
 
-.flipOuter:focus-visible {
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.45);
+.flipOuter:focus-visible .face {
+  box-shadow: 0 0 0 4px var(--color-primary-shadow), var(--shadow-sm);
 }
 
 .flipInner {
   position: relative;
   width: 100%;
-  min-height: 220px;
+  min-height: 260px;
   transform-style: preserve-3d;
-  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
-  border-radius: 18px;
+  transition: transform 0.6s var(--spring-bounce);
+  border-radius: var(--radius-lg);
 }
 
 .flipped {
@@ -41,90 +48,73 @@
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px 20px;
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.1);
+  padding: 32px 24px;
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.front {
-  background: linear-gradient(160deg, #ffffff 0%, #f1f5f9 100%);
+.flipOuter:hover .face {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 0 var(--color-border);
 }
+
 
 .back {
-  background: linear-gradient(160deg, #eff6ff 0%, #e0e7ff 100%);
+  background: var(--color-primary-bg);
+  border-color: var(--color-primary-shadow);
   transform: rotateY(180deg);
 }
 
 .label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #64748b;
-  margin-bottom: 10px;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
 }
 
 .word {
   margin: 0;
-  font-size: clamp(26px, 5vw, 34px);
-  font-weight: 600;
-  color: #0f172a;
+  font-size: clamp(32px, 6vw, 42px);
+  font-weight: 700;
+  color: var(--color-text);
   text-align: center;
-  line-height: 1.25;
+  line-height: 1.2;
+}
+
+.back .word {
+  color: var(--color-primary-shadow);
 }
 
 .hint {
-  margin-top: 16px;
-  font-size: 13px;
-  color: #94a3b8;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  opacity: 0.6;
 }
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
+  animation: slideUpActions 0.3s var(--spring-bounce);
 }
 
-.btnRight,
-.btnWrong {
-  flex: 1 1 160px;
-  padding: 12px 16px;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition:
-    transform 0.12s ease,
-    box-shadow 0.12s ease;
+@keyframes slideUpActions {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.btnRight {
-  background: #ecfdf5;
-  color: #065f46;
-  border-color: rgba(16, 185, 129, 0.35);
-}
-
-.btnWrong {
-  background: #fef2f2;
-  color: #991b1b;
-  border-color: rgba(239, 68, 68, 0.35);
-}
-
-.btnRight:hover,
-.btnWrong:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-}
-
-.btnRight:active,
-.btnWrong:active {
-  transform: translateY(0);
+.btnRight, .btnWrong {
+  width: 100%;
 }

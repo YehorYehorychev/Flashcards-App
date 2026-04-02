@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# 🇺🇦 Ukrainian Flashcards App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, gamified, and highly interactive educational web application designed to help users learn Ukrainian vocabulary effectively. Built with **React**, **TypeScript**, and **Vite**.
 
-Currently, two official plugins are available:
+## ✨ Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **🎯 Gamified Learning**: A vibrant, Duolingo-inspired UI with smooth animations and tactile feedback.
+- **🎴 3D Flashcards**: Study mode with realistic 3D flip animations to reveal English translations.
+- **🧩 Interactive Quizzes**: Test your knowledge with Multiple Choice and Fill-in-the-blank quiz types.
+- **📉 Progress Tracking**: A detailed Statistics dashboard to monitor your accuracy and total cards answered across different categories.
+- **🔄 Smart Redo**: Automatically queue cards you've missed for targeted practice later.
+- **📱 Responsive Design**: Fully optimized for both desktop and mobile learning.
 
-## React Compiler
+## 🚀 Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/) (v18 or newer recommended)
+- [npm](https://www.npmjs.com/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Run the development server:
+```bash
+npm run dev
+```
+Open [http://localhost:5173](http://localhost:5173) to see the app.
+
+### Testing
+
+Run the Playwright E2E tests:
+```bash
+npm run test:e2e
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Technology Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Framework**: React 18
+- **Language**: TypeScript
+- **Bundler**: Vite
+- **Styling**: Vanilla CSS (CSS Modules)
+- **Icons**: Emoji-based category representation
+- **Testing**: Playwright
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📂 Project Structure
+
+- `src/data/`: Vocabulary datasets and categories.
+- `src/components/`: Reusable UI components (Flashcards, Study Session).
+- `src/pages/`: Main application views (Home, Stats, Quiz, etc.).
+- `src/context/`: State management for user progress.
+- `e2e/`: End-to-end testing suite.
