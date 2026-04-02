@@ -54,6 +54,8 @@ export function QuizPage() {
 
   const current = deck[index]
   const finished = deck.length > 0 && index >= deck.length
+  
+  const progressPercent = deck.length > 0 ? (index / deck.length) * 100 : 0
 
   const mcOptions = useMemo(() => {
     if (!current || current.quiz.type !== 'multiple-choice') return []
@@ -121,18 +123,21 @@ export function QuizPage() {
     return (
       <main className={styles.page}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Quiz complete</h1>
+          <h1 className={styles.title}>Quiz complete! 🏆</h1>
           <p className={styles.subtitle}>
             {categoryLabel}: you answered {deck.length} question
-            {deck.length === 1 ? '' : 's'}.
+            {deck.length === 1 ? '' : 's'}. Check your stats to see how you did!
           </p>
         </header>
         <footer className={styles.footer}>
+          <Link className={styles.link} to="/stats">
+            View Stats
+          </Link>
           <Link className={styles.link} to="/quiz">
-            Another quiz
+            Play another quiz
           </Link>
           <Link className={styles.linkMuted} to="/">
-            Home
+            Back Home
           </Link>
         </footer>
       </main>
@@ -147,21 +152,33 @@ export function QuizPage() {
     </>
   )
 
+  let inputExtraClass = ''
+  if (revealed) {
+     inputExtraClass = lastCorrect ? styles.correct : styles.wrong
+  }
+
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <p className={styles.crumb}>{crumb}</p>
+        <div className={styles.topBar}>
+          <p className={styles.crumb}>{crumb}</p>
+        </div>
+        
+        <div className={styles.progressContainer}>
+           <div className={styles.progressBar} style={{ width: `${progressPercent}%` }}></div>
+        </div>
+        
         <h1 className={styles.title}>
           Question {index + 1} of {deck.length}
         </h1>
       </header>
 
-      <p className={styles.prompt} lang="uk">
+      <p className={styles.prompt} lang="uk" key={`${index}-prompt` /* reanimate text entering */}>
         {current.ukranian}
       </p>
 
       {current.quiz.type === 'multiple-choice' ? (
-        <div className={styles.options} role="group" aria-label="Answer choices">
+        <div className={styles.options} role="group" aria-label="Answer choices" key={`${index}-mc`}>
           {mcOptions.map((opt) => {
             const isPicked = mcSelection === opt
             const isAnswer = answersMatch(current.english, opt)
@@ -184,26 +201,29 @@ export function QuizPage() {
           })}
         </div>
       ) : (
-        <form className={styles.form} onSubmit={handleFillSubmit}>
+        <form className={styles.form} onSubmit={handleFillSubmit} key={`${index}-fill`}>
           <label htmlFor="fill-answer" className="visually-hidden">
             English translation
           </label>
           <input
             id="fill-answer"
-            className={styles.input}
+            className={`${styles.input} ${inputExtraClass}`}
             value={fillValue}
             onChange={(e) => setFillValue(e.target.value)}
             placeholder="Type the English translation"
             autoComplete="off"
             disabled={revealed}
+            autoFocus
           />
-          <button
-            type="submit"
-            className={styles.submit}
-            disabled={revealed || !fillValue.trim()}
-          >
-            Check answer
-          </button>
+          {!revealed && (
+            <button
+              type="submit"
+              className={styles.submit}
+              disabled={revealed || !fillValue.trim()}
+            >
+              Check answer
+            </button>
+          )}
         </form>
       )}
 
@@ -213,15 +233,15 @@ export function QuizPage() {
           role="status"
         >
           {lastCorrect
-            ? 'Correct!'
-            : `Not quite — the answer was: ${current.english}`}
+            ? 'Correct! 🎉'
+            : `Not quite! The answer was: ${current.english}`}
         </div>
       ) : null}
 
       {revealed ? (
         <footer className={styles.footer}>
-          <button type="button" className={styles.nextBtn} onClick={goNextQuestion}>
-            {index + 1 >= deck.length ? 'Finish' : 'Next question'}
+          <button type="button" className={`btn-gamified btn-primary ${styles.nextBtn}`} onClick={goNextQuestion}>
+            {index + 1 >= deck.length ? 'Finish Quiz' : 'Next Question'}
           </button>
         </footer>
       ) : null}
@@ -229,7 +249,7 @@ export function QuizPage() {
       {!revealed ? (
         <footer className={styles.footer}>
           <Link className={styles.linkMuted} to="/quiz">
-            ← Exit to quiz setup
+            Exit Quiz
           </Link>
         </footer>
       ) : null}
