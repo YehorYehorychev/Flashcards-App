@@ -5,12 +5,6 @@ import styles from './QuizSelectionPage.module.css'
 
 type QuizTypeParam = 'multiple-choice' | 'fill-in-the-blank'
 
-const categoryIcons: Record<string, string> = {
-  animals: '🐶',
-  food: '🍎',
-  verbs: '🏃',
-}
-
 export function QuizSelectionPage() {
   const [quizType, setQuizType] = useState<QuizTypeParam>('multiple-choice')
 
@@ -53,7 +47,7 @@ export function QuizSelectionPage() {
           const to = `/quiz/${c.id}?${search}`
           return (
             <Link key={c.id} className={styles.card} style={{ animationDelay: `${index * 100}ms` }} to={to}>
-               <div className={styles.cardIcon}>{categoryIcons[c.id] || '✨'}</div>
+               <div className={styles.cardIcon}>{c.icon}</div>
               <h2 className={styles.cardTitle}>{c.label}</h2>
               <p className={styles.cardBody}>
                 {quizType === 'multiple-choice'

@@ -61,9 +61,14 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.flipOuter:hover .face {
+.flipOuter:hover .front {
   transform: translateY(-4px);
   box-shadow: 0 8px 0 var(--color-border);
+}
+
+.flipOuter:hover .back {
+  transform: rotateY(180deg) translateY(-4px);
+  box-shadow: 0 -8px 0 var(--color-primary-shadow); /* Reversed shadow for flipped card */
 }
 
 

@@ -2,12 +2,6 @@ import { Link } from 'react-router-dom'
 import { categories } from '../data/flashcards'
 import styles from './CategorySelectionPage.module.css'
 
-const categoryIcons: Record<string, string> = {
-  animals: '🐶',
-  food: '🍎',
-  verbs: '🏃',
-}
-
 export function CategorySelectionPage() {
   return (
     <main className={styles.page}>
@@ -19,7 +13,7 @@ export function CategorySelectionPage() {
       <section className={styles.grid} aria-label="Categories">
         {categories.map((c, index) => (
           <Link key={c.id} className={styles.card} style={{ animationDelay: `${index * 100}ms` }} to={`/study/${c.id}`}>
-            <div className={styles.cardIcon}>{categoryIcons[c.id] || '✨'}</div>
+            <div className={styles.cardIcon}>{c.icon}</div>
             <h2 className={styles.cardTitle}>{c.label}</h2>
             <p className={styles.cardBody}>Start session</p>
           </Link>

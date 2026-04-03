@@ -27,16 +27,16 @@ export type Flashcard = {
   xp?: number
 }
 
-export const categories: { id: Category; label: string }[] = [
-  { id: 'animals', label: 'Animals' },
-  { id: 'food', label: 'Food' },
-  { id: 'verbs', label: 'Verbs' },
-  { id: 'colors', label: 'Colors' },
-  { id: 'family', label: 'Family' },
-  { id: 'numbers', label: 'Numbers' },
-  { id: 'greetings', label: 'Greetings' },
-  { id: 'places', label: 'Places' },
-  { id: 'weather', label: 'Weather' },
+export const categories: { id: Category; label: string; icon: string }[] = [
+  { id: 'animals', label: 'Animals', icon: '🐶' },
+  { id: 'food', label: 'Food', icon: '🍎' },
+  { id: 'verbs', label: 'Verbs', icon: '🏃' },
+  { id: 'colors', label: 'Colors', icon: '🎨' },
+  { id: 'family', label: 'Family', icon: '👨‍👩‍👧‍👦' },
+  { id: 'numbers', label: 'Numbers', icon: '🔢' },
+  { id: 'greetings', label: 'Greetings', icon: '👋' },
+  { id: 'places', label: 'Places', icon: '📍' },
+  { id: 'weather', label: 'Weather', icon: '☀️' },
 ]
 
 export const flashcards: Flashcard[] = [
