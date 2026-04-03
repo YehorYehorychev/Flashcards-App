@@ -2,111 +2,87 @@
 
 ## Overview
 
-A front-end-only flashcards web application to help users learn Ukranian vocabulary. Built using **Vite**, **React**, and **TypeScript**. The app uses **static data** to render flashcards grouped into categories. It supports study, quiz, and review modes, with performance tracked using in-browser state.
+A premium, gamified Ukrainian-English flashcard learning application inspired by platforms like **Duolingo**. Built using **Vite**, **React**, and **TypeScript**, the app focuses on helping users reach basic fluency through a rich vocabulary (1000+ words), smooth animations, and engagement-building gamification.
 
 ---
 
 ## Tech Stack
 
 - **Frontend Framework:** React (with Vite + TypeScript)
-- **Data Storage:** Static JSON/TypeScript files (no backend)
-- **State Management:** React `useState` / `useReducer`, optionally `useContext` or Zustand
-- **Styling:** CSS Modules, TailwindCSS, or any preferred CSS strategy
-- **Persistence:** Optional localStorage (to remember wrong answers or stats)
+- **Data Storage:** Static JSON/TypeScript files
+- **Animations:** Framer Motion or optimized CSS Transitions (for "Duolingo-style" fluidity)
+- **State Management:** React Context / Zustand for progress tracking
+- **Styling:** CSS Modules with a premium design system (custom tokens)
+- **Persistence:** localStorage for Streaks, XP, and stats
 
 ---
 
 ## Features
 
 ### 1. Flashcard Study Mode
+- **Duolingo-style Transitions:** Smooth, responsive card sliding and flipping.
+- **Micro-interactions:** Delightful feedback on correct/incorrect answers.
+- **Progressive Disclosure:** Options appear only when relevant (e.g., after flip).
 
-- Flashcards show a Ukranian word by default.
-- Clicking a card flips it to reveal the English translation.
-- After flipping, two buttons appear:
-  - ✅ "I got it right"
-  - ❌ "I got it wrong"
-- App remembers which cards were marked as incorrect.
+### 2. Gamification & Engagement
+- **Streaks:** Daily usage tracking to build learning habits.
+- **XP/Points:** Gain points for completing sessions and getting correct answers.
+- **Progress Bars:** Visual indication of session progress at the top of the screen.
+- **Leveling:** Basic rank/level system based on total XP.
 
-### 2. Redo Mode
-
-- Option to study only the cards marked as **"wrong"** in the previous round.
-- Works just like study mode, but only includes failed cards.
-- User can reset this list at any time.
-
-### 3. Categories
-
-- Cards are grouped into the following categories:
-  - **Animals**
-  - **Food**
-  - **Verbs**
-- User can choose which category to study or quiz.
+### 3. Vocabulary (The "1000 Word" Goal)
+- Extensive library of 1000+ words across diverse categories:
+  - Animals, Food, Verbs, Colors, Family, Travel, Business, etc.
+- Smart distractors for Multiple-Choice quizzes.
 
 ### 4. Quiz Mode
+- **Multiple Choice:** 1 word, 4 options.
+- **Fill in the Blank:** Text input with case-insensitive validation.
+- **Matching Pairs:** (Future) Match Ukrainian and English words in a grid.
 
-- Two types of quizzes:
-  - **Multiple Choice**
-    - One Ukranian word, 4 English options (1 correct + 3 distractors)
-    - Distractors are statically defined per question
-  - **Fill in the Blank**
-    - Ukranian word shown, user types the English word
-    - Exact match is required (case-insensitive)
-
-### 5. Statistics Page
-
-- Track the following stats (using browser memory or localStorage):
-  - Number of cards studied per category
-  - Number of correct vs. incorrect answers
-  - Accuracy percentage
+### 5. Advanced Statistics Page
+- Modern data visualization for:
+  - Accuracy Trends
+  - Cumulative XP
+  - Category Mastery percentage
 
 ---
 
 ## UI Pages / Components
 
-### 1. Home Page
-- Welcome message
-- Buttons/Links to:
-  - Study Mode
-  - Quiz Mode
-  - Stats Page
+### 1. Home / Dashboard
+- **Streak Overview:** Visible goal/habit tracker.
+- **XP Counter:** Total points earned.
+- **Category Grid:** Cards for different topics with progress indicators.
 
-### 2. Category Selection Page
-- Shows available categories: Animals, Food, Verbs
-- Select mode (Study / Quiz)
-- Proceed to flashcards or quiz
+### 2. Study/Quiz Session
+- **Progress Header:** Progress bar and session escape button.
+- **The Flashcard:** Core learning component with premium animations.
+- **Feedback Overlay:** Quick modal/overlay after each question (correct/wrong).
 
-### 3. Flashcard Study Component
-- Displays one card at a time
-- Flip animation (optional)
-- Buttons for “Right” and “Wrong”
-
-### 4. Redo Component
-- Same UI as Flashcard Study, but only shows failed cards
-
-### 5. Quiz Component
-- Multiple choice or fill-in-the-blank
-- Feedback after each question (correct/incorrect)
-
-### 6. Statistics Page
-- Summary of all sessions
-- LocalStorage support for persistence (optional)
+### 3. Statistics Page
+- Detailed breakdown of learning history.
 
 ---
 
 ## Data Format Example
 
-### Card JSON (or TypeScript object)
+### Card JSON
 ```ts
 {
+  id: "animals-kot",
   category: "animals",
   ukranian: "кіт",
   english: "the cat",
   quiz: {
     type: "multiple-choice",
     options: ["the dog", "the house", "the cat", "the bird"]
-  }
+  },
+  xp: 10 // XP awarded for mastering this card
 }
+```
 
 ## Out of Scope
-- No user accounts or authentication
-- No dynamic backend or API
-- No card editor or admin UI
+- No user accounts or cloud backend (all local).
+- No social features or leaderboards (initially).
+- No audio pronunciations (initially).

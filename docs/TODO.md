@@ -93,3 +93,29 @@
     ✅ *Acceptance Criteria:* Displays total correct, incorrect, and overall accuracy %.
   - [x] Breakdown by category  
     ✅ *Acceptance Criteria:* Stats are grouped and labeled by category (e.g., Animals: 80% correct).
+
+## 🔴 Phase 6: Vocabulary Expansion (The 1000 Word Goal)
+
+- [ ] Group words into more specific categories (Family, Travel, Business, etc.)
+- [ ] Add 100+ words for each category to reach 1000 total
+- [ ] Ensure high-quality distractors for all multiple-choice questions
+- [ ] Implement a search/filter on a "Library" page to browse all words
+
+## 🔴 Phase 7: UI/UX Masterclass (Duolingo-style)
+
+- [ ] Replace "re-mount" animations with fluid transitions (Slide/Flip)
+- [ ] Add a global `DesignSystem.css` with Duolingo-inspired colors and shadows
+- [ ] Implement a **Progress Bar** at the top of study/quiz sessions
+- [ ] Add "Confetti" or success micro-animations for perfect sessions
+
+## 🔴 Phase 8: Gamification & Engagement
+
+- [ ] Implement **Daily Streaks** using `localStorage`
+- [ ] Add **XP (Experience Points)** system
+- [ ] Create a **Leveling System** (e.g., Level 1: Beginner, Level 2: Explorer)
+- [ ] Build a "Session Complete" summary screen with XP and Streak updates
+
+## 🛠️ Maintenance & Process
+
+- [x] Add rule to make a commit after major changes
+- [ ] Regular automated test runs for UI and data integrity
