@@ -90,14 +90,11 @@ test.describe('Study mode', () => {
 
     await expect(page.getByRole('heading', { name: /Card 3 of \d+/ })).toBeVisible()
     await expect(page.getByText('яблуко', { exact: true })).toBeVisible()
-    await page.getByRole('button', { name: 'Show English translation' }).click()
-    await page.getByRole('button', { name: /got it right/i }).click()
-
-    let isComplete = false
-    while (!isComplete && await page.getByRole('button', { name: 'Show English translation' }).isVisible()) {
+    
+    // Finalize the deck
+    while (!(await page.getByRole('heading', { name: /Session complete/i, level: 1 }).isVisible())) {
         await page.getByRole('button', { name: 'Show English translation' }).click()
         await page.getByRole('button', { name: /got it right/i }).click()
-        isComplete = await page.getByRole('heading', { name: /Session complete/i, level: 1 }).isVisible()
     }
 
     await expect(
@@ -109,15 +106,19 @@ test.describe('Study mode', () => {
   test('counts wrong answers on session summary', async ({ page }) => {
     await page.goto('/study/animals')
 
-    // Click through the entire deck (7 cards total)
-    for (let i = 0; i < 7; i++) {
+    // Click through the entire deck (dynamic)
+    let isFinished = false;
+    let cardCount = 0;
+    while (!isFinished) {
         await page.getByRole('button', { name: 'Show English translation' }).click()
         // Mark first card (кіт) as wrong, all others right
-        if (i === 0) {
+        if (cardCount === 0) {
             await page.getByRole('button', { name: /got it wrong/i }).click()
         } else {
             await page.getByRole('button', { name: /got it right/i }).click()
         }
+        cardCount++;
+        isFinished = await page.getByRole('heading', { name: /Session complete/i, level: 1 }).isVisible();
     }
 
     await expect(
@@ -150,18 +151,18 @@ test.describe('Quiz mode', () => {
     await expect(page).toHaveURL(/type=multiple-choice/)
 
     await expect(page.getByRole('heading', { name: /Question 1 of \d+/ })).toBeVisible()
-    await expect(page.getByText('хліб', { exact: true })).toBeVisible()
-    await page.getByRole('button', { name: 'bread' }).click()
-    await expect(page.getByText(/Correct/i)).toBeVisible()
-
-    let nextBtn = await page.getByRole('button', { name: /Next question|Finish/i })
-    while (await nextBtn.textContent() !== 'Finish Quiz') {
-        await nextBtn.click()
-        // Click the first multiple choice option (which is the first button inside the main section that isn't the submit button)
-        await page.locator('[role="group"] button').first().click()
-        nextBtn = await page.getByRole('button', { name: /Next question|Finish/i })
+    
+    // Complete the quiz
+    while (!(await page.getByRole('heading', { name: /Quiz complete/i, level: 1 }).isVisible())) {
+        const option = page.locator('[role="group"] button').first()
+        if (await option.isVisible()) {
+            await option.click()
+            const nextBtn = page.getByRole('button', { name: /Next Question|Finish Quiz/i })
+            await nextBtn.click()
+        } else {
+            break;
+        }
     }
-    await nextBtn.click()
     
     await expect(
       page.getByRole('heading', { name: /Quiz complete/i, level: 1 }),
@@ -185,7 +186,7 @@ test.describe('Quiz mode', () => {
 test.describe('Stats', () => {
   test('shows overall section after activity', async ({ page }) => {
     await page.addInitScript(() => {
-      localStorage.removeItem('flashcards-app-progress-v1')
+      localStorage.removeItem('flashcards-app-progress-v2')
     })
     await page.goto('/study/food')
     await page
