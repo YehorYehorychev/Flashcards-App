@@ -11,7 +11,24 @@ A modern, gamified, and highly interactive educational web application designed 
 - **🔄 Smart Redo**: Automatically queue cards you've missed for targeted practice later.
 - **📱 Responsive Design**: Fully optimized for both desktop and mobile learning.
 
-## 🚀 Getting Started
+## 📸 Screenshots
+
+### Home Dashboard
+![Home Page](public/screenshots/home_page.png)
+*Modern dashboard with Daily Streak and Experience Points (XP) tracking.*
+
+### Study Mode
+![Study Session](public/screenshots/study_session.png)
+*Fluid animations and progress tracking as you learn new vocabulary.*
+
+### Interactive Quizzes
+![Quiz Multiple Choice](public/screenshots/quiz_multiple_choice.png)
+![Quiz Success](public/screenshots/quiz_success.png)
+*Multiple formats to test your knowledge with instant feedback.*
+
+### Detailed Statistics
+![Stats Dashboard](public/screenshots/stats_dashboard.png)
+*Comprehensive breakdown of your learning progress by category.*
 
 ### Prerequisites
 
