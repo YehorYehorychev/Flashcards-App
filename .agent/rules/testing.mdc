@@ -1,0 +1,17 @@
+---
+alwaysApply: true
+---
+
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Testing
+
+- Once you are done making changes to the codebase, run all the tests and ensure they pass.
+- **UI/Animation Verification**: Manually verify that animations are smooth, transitions are fluid, and the layout is responsive across different screen sizes.
+- **Data Integrity**: Verify that any new vocabulary data has correct categories and valid quiz options.
+- Once you are done making changes, proactively ask the user if you should also write new tests to cover a new functionality.
+- **Process Rule**: Make a commit after every major phase or significant change once the tests pass.

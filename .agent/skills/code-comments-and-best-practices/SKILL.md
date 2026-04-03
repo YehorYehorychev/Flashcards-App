@@ -46,6 +46,12 @@ Apply these on new and touched code unless the project’s rules or patterns say
 
 Do not expand scope or refactor unrelated code to “apply best practices”—only improve what the task touches, per project guidance.
 
+## Version Control Habits
+
+- **Atomic Commits**: Make a commit after every major change or phase completion (e.g., `git commit -m "feat: complete Phase 6 vocabulary expansion"`).
+- **Clear Messages**: Use conventional commits (feat, fix, docs, style, refactor, test, chore).
+- **Verify before Commit**: Ensure the code builds and basic tests pass before committing.
+
 ## Checklist before finishing a change
 
 - [ ] Non-obvious “why” and edge cases are documented where needed.
