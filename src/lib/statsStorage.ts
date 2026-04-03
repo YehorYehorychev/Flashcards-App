@@ -1,7 +1,7 @@
 import type { Category } from '../data/flashcards'
 
 /** Persisted snapshot version; bump when shape changes. */
-export const STATS_STORAGE_KEY = 'flashcards-app-progress-v1'
+export const STATS_STORAGE_KEY = 'flashcards-app-progress-v2'
 
 export type CategoryStats = {
   studied: number
@@ -10,10 +10,13 @@ export type CategoryStats = {
 }
 
 export type PersistedProgress = {
-  v: 1
-  byCategory: Record<Category, CategoryStats>
-  /** Card IDs marked wrong in the last completed study/redo session (for redo mode). */
+  v: 2
+  byCategory: Partial<Record<Category, CategoryStats>>
+  /** Card IDs marked wrong in the last completed study/redo session. */
   lastSessionWrongIds: string[]
+  totalXP: number
+  streak: number
+  lastActivityDate: string | null // ISO date string
 }
 
 const emptyCategory = (): CategoryStats => ({
@@ -24,14 +27,22 @@ const emptyCategory = (): CategoryStats => ({
 
 export function defaultProgress(): PersistedProgress {
   return {
-    v: 1,
+    v: 2,
     byCategory: {
       animals: emptyCategory(),
       food: emptyCategory(),
       verbs: emptyCategory(),
       colors: emptyCategory(),
+      family: emptyCategory(),
+      numbers: emptyCategory(),
+      greetings: emptyCategory(),
+      places: emptyCategory(),
+      weather: emptyCategory(),
     },
     lastSessionWrongIds: [],
+    totalXP: 0,
+    streak: 0,
+    lastActivityDate: null,
   }
 }
 
@@ -51,29 +62,36 @@ function parseProgress(raw: string | null): PersistedProgress {
     const data = JSON.parse(raw) as unknown
     if (data === null || typeof data !== 'object') return defaultProgress()
     const o = data as Record<string, unknown>
-    if (o.v !== 1) return defaultProgress()
-    const by = o.byCategory
-    if (by === null || typeof by !== 'object') return defaultProgress()
-    const animals = (by as Record<string, unknown>).animals
-    const food = (by as Record<string, unknown>).food
-    const verbs = (by as Record<string, unknown>).verbs
-    const colors = (by as Record<string, unknown>).colors
-    if (
-      !isCategoryStats(animals) ||
-      !isCategoryStats(food) ||
-      !isCategoryStats(verbs) ||
-      !isCategoryStats(colors)
-    ) {
-      return defaultProgress()
+    
+    // Simple migration/validation
+    if (o.v !== 2) {
+       // If it's v1 or unknown, just reset to default for now or try to migrate
+       // For this exercise, we'll just return default if version mismatch
+       return defaultProgress()
     }
-    const ids = o.lastSessionWrongIds
-    const lastSessionWrongIds = Array.isArray(ids)
-      ? ids.filter((id): id is string => typeof id === 'string')
+
+    const by = o.byCategory as Record<Category, CategoryStats>
+    const validatedBy: Partial<Record<Category, CategoryStats>> = {}
+    
+    if (by && typeof by === 'object') {
+      Object.keys(by).forEach((key) => {
+        if (isCategoryStats(by[key as Category])) {
+          validatedBy[key as Category] = by[key as Category]
+        }
+      })
+    }
+
+    const lastSessionWrongIds = Array.isArray(o.lastSessionWrongIds)
+      ? o.lastSessionWrongIds.filter((id): id is string => typeof id === 'string')
       : []
+
     return {
-      v: 1,
-      byCategory: { animals, food, verbs, colors },
+      v: 2,
+      byCategory: validatedBy,
       lastSessionWrongIds,
+      totalXP: typeof o.totalXP === 'number' ? o.totalXP : 0,
+      streak: typeof o.streak === 'number' ? o.streak : 0,
+      lastActivityDate: typeof o.lastActivityDate === 'string' ? o.lastActivityDate : null,
     }
   } catch {
     return defaultProgress()

@@ -3,11 +3,22 @@ import { useAppProgress } from '../context/useAppProgress'
 import styles from './HomePage.module.css'
 
 export function HomePage() {
-  const { lastSessionWrongIds, clearWrongCardList } = useAppProgress()
+  const { lastSessionWrongIds, clearWrongCardList, totalXP, streak } = useAppProgress()
   const redoCount = lastSessionWrongIds.length
 
   return (
     <main className={styles.page}>
+      <header className={styles.statsBar}>
+        <div className={styles.statItem} title="Your current daily streak">
+          <span className={styles.statIcon}>🔥</span>
+          <span className={styles.statValue}>{streak} day{streak === 1 ? '' : 's'}</span>
+        </div>
+        <div className={styles.statItem} title="Total Experience Points earned">
+          <span className={styles.statIcon}>✨</span>
+          <span className={styles.statValue}>{totalXP} XP</span>
+        </div>
+      </header>
+
       <header className={styles.hero}>
         <h1 className={styles.title}>Ukrainian Flashcards 🇺🇦</h1>
         <p className={styles.subtitle}>

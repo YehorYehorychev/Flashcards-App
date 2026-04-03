@@ -1,16 +1,17 @@
+.container {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
   width: 100%;
-  max-width: 440px;
-  animation: scaleIn var(--transition-normal) var(--spring-bounce);
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .flipOuter {

@@ -16,17 +16,42 @@ export function AppProgressProvider({ children }: { children: ReactNode }) {
     loadProgress(),
   )
 
-  const recordStudyAnswer = useCallback((category: Category, correct: boolean) => {
+  const recordStudyAnswer = useCallback((category: Category, correct: boolean, xp: number = 0) => {
     setProgress((prev) => {
+      const today = new Date().toISOString().split('T')[0]
+      let newStreak = prev.streak
+      
+      // Update streak
+      if (prev.lastActivityDate !== today) {
+        if (!prev.lastActivityDate) {
+          newStreak = 1
+        } else {
+          const lastDate = new Date(prev.lastActivityDate)
+          const currentDate = new Date(today)
+          const diffTime = Math.abs(currentDate.getTime() - lastDate.getTime())
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+          
+          if (diffDays === 1) {
+            newStreak = prev.streak + 1
+          } else if (diffDays > 1) {
+            newStreak = 1
+          }
+        }
+      }
+
+      const categoryStats = prev.byCategory[category] || { studied: 0, correct: 0, incorrect: 0 }
+
       const next: PersistedProgress = {
         ...prev,
+        totalXP: prev.totalXP + (correct ? xp : 0),
+        streak: newStreak,
+        lastActivityDate: today,
         byCategory: {
           ...prev.byCategory,
           [category]: {
-            studied: prev.byCategory[category].studied + 1,
-            correct: prev.byCategory[category].correct + (correct ? 1 : 0),
-            incorrect:
-              prev.byCategory[category].incorrect + (correct ? 0 : 1),
+            studied: categoryStats.studied + 1,
+            correct: categoryStats.correct + (correct ? 1 : 0),
+            incorrect: categoryStats.incorrect + (correct ? 0 : 1),
           },
         },
       }
@@ -36,8 +61,8 @@ export function AppProgressProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const recordQuizAnswer = useCallback(
-    (category: Category, correct: boolean) => {
-      recordStudyAnswer(category, correct)
+    (category: Category, correct: boolean, xp: number = 0) => {
+      recordStudyAnswer(category, correct, xp)
     },
     [recordStudyAnswer],
   )
@@ -68,6 +93,8 @@ export function AppProgressProvider({ children }: { children: ReactNode }) {
     () => ({
       byCategory: progress.byCategory,
       lastSessionWrongIds: progress.lastSessionWrongIds,
+      totalXP: progress.totalXP,
+      streak: progress.streak,
       recordStudyAnswer,
       recordQuizAnswer,
       finishStudySession,
@@ -76,6 +103,8 @@ export function AppProgressProvider({ children }: { children: ReactNode }) {
     [
       progress.byCategory,
       progress.lastSessionWrongIds,
+      progress.totalXP,
+      progress.streak,
       recordStudyAnswer,
       recordQuizAnswer,
       finishStudySession,

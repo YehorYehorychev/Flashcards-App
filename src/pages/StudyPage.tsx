@@ -2,12 +2,12 @@ import { useCallback, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { StudySession } from '../components/StudySession'
 import { useAppProgress } from '../context/useAppProgress'
-import type { Category } from '../data/flashcards'
+import type { Category, Flashcard } from '../data/flashcards'
 import { categories, flashcardsByCategory } from '../data/flashcards'
 import styles from './StudyPage.module.css'
 
 function isCategory(value: string | undefined): value is Category {
-  return value === 'animals' || value === 'food' || value === 'verbs' || value === 'colors'
+  return categories.some((c) => c.id === value)
 }
 
 export function StudyPage() {
@@ -24,8 +24,8 @@ export function StudyPage() {
     category && categories.find((c) => c.id === category)?.label
 
   const handleRecordAnswer = useCallback(
-    (correct: boolean) => {
-      if (category) recordStudyAnswer(category, correct)
+    (correct: boolean, card: Flashcard) => {
+      if (category) recordStudyAnswer(category, correct, card.xp)
     },
     [category, recordStudyAnswer],
   )

@@ -7,7 +7,7 @@ import { shuffled } from '../lib/shuffle'
 import styles from './QuizPage.module.css'
 
 function isCategory(value: string | undefined): value is Category {
-  return value === 'animals' || value === 'food' || value === 'verbs' || value === 'colors'
+  return categories.some((c) => c.id === value)
 }
 
 function quizTypeFromParam(value: string | null): Quiz['type'] | null {
@@ -80,7 +80,7 @@ export function QuizPage() {
     setMcSelection(option)
     setRevealed(true)
     setLastCorrect(ok)
-    if (category) recordQuizAnswer(category, ok)
+    if (category) recordQuizAnswer(category, ok, current.xp)
   }
 
   const handleFillSubmit = (e: FormEvent) => {
@@ -89,7 +89,7 @@ export function QuizPage() {
     const ok = answersMatch(current.english, fillValue)
     setRevealed(true)
     setLastCorrect(ok)
-    if (category) recordQuizAnswer(category, ok)
+    if (category) recordQuizAnswer(category, ok, current.xp)
   }
 
   if (!category || !quizType) {
