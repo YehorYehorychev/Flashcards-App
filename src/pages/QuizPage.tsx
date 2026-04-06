@@ -244,6 +244,7 @@ export function QuizPage() {
         <div
           className={lastCorrect ? styles.feedbackOk : styles.feedbackBad}
           role="status"
+          aria-live="assertive"
         >
           {lastCorrect
             ? 'Correct! 🎉'
@@ -253,7 +254,12 @@ export function QuizPage() {
 
       {revealed ? (
         <footer className={styles.footer}>
-          <button type="button" className={`btn-gamified btn-primary ${styles.nextBtn}`} onClick={goNextQuestion}>
+          <button 
+            type="button" 
+            className={`btn-gamified btn-primary ${styles.nextBtn}`} 
+            onClick={goNextQuestion}
+            autoFocus
+          >
             {index + 1 >= deck.length ? 'Finish Quiz' : 'Next Question'}
           </button>
         </footer>
