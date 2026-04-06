@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Confetti } from './Confetti'
 import type { Flashcard as FlashcardModel } from '../data/flashcards'
 import { Flashcard } from './Flashcard'
 import styles from '../pages/StudyPage.module.css'
@@ -71,43 +73,50 @@ export function StudySession({
   if (finished) {
     return (
       <main className={styles.page}>
-        <header className={styles.header}>
-          <h1 className={styles.title}>Session complete! 🎉</h1>
-          <p className={styles.subtitle}>
-            {categoryLabel}: you reviewed {cards.length} card
-            {cards.length === 1 ? '' : 's'}.
-          </p>
-        </header>
-        <section className={styles.summary}>
-          <p>
-            <strong>{cards.length - wrongIds.length}</strong> correct
-          </p>
-          <p>
-            <strong>{wrongIds.length}</strong> to review again
-          </p>
-          {wrongIds.length > 0 ? (
-            <p className={styles.muted}>
-              You can review these mistakes from the home screen using the Redo button.
+        <Confetti />
+        <motion.div
+           initial={{ opacity: 0, scale: 0.95 }}
+           animate={{ opacity: 1, scale: 1 }}
+           className={styles.finishContainer}
+        >
+          <header className={styles.header}>
+            <h1 className={styles.title}>Session complete! 🎉</h1>
+            <p className={styles.subtitle}>
+              {categoryLabel}: you reviewed {cards.length} card
+              {cards.length === 1 ? '' : 's'}.
             </p>
-          ) : (
-            <p className={styles.muted}>
-              Perfect score! Awesome job! 🚀
+          </header>
+          <section className={styles.summary}>
+            <p>
+              <strong>{cards.length - wrongIds.length}</strong> correct
             </p>
-          )}
-        </section>
-        <footer className={styles.footer}>
-          {wrongIds.length > 0 ? (
-            <Link className={styles.link} to="/study/redo">
-              Review Mistakes Now
+            <p>
+              <strong>{wrongIds.length}</strong> to review again
+            </p>
+            {wrongIds.length > 0 ? (
+              <p className={styles.muted}>
+                You can review these mistakes from the home screen using the Redo button.
+              </p>
+            ) : (
+              <p className={styles.muted}>
+                Perfect score! Awesome job! 🚀
+              </p>
+            )}
+          </section>
+          <footer className={styles.footer}>
+            {wrongIds.length > 0 ? (
+              <Link className="btn-gamified btn-primary" to="/study/redo">
+                Review Mistakes Now
+              </Link>
+            ) : null}
+            <Link className={styles.link} to="/study">
+              Study another category
             </Link>
-          ) : null}
-          <Link className={styles.link} to="/study">
-            Study another category
-          </Link>
-          <Link className={styles.linkMuted} to="/">
-            Back Home
-          </Link>
-        </footer>
+            <Link className={styles.linkMuted} to="/">
+              Back Home
+            </Link>
+          </footer>
+        </motion.div>
       </main>
     )
   }

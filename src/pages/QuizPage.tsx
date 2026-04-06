@@ -1,5 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Confetti } from '../components/Confetti'
 import { useAppProgress } from '../context/useAppProgress'
 import type { Category, Flashcard, Quiz } from '../data/flashcards'
 import { categories, flashcardsByCategory } from '../data/flashcards'
@@ -126,24 +128,31 @@ export function QuizPage() {
   if (finished) {
     return (
       <main className={styles.page}>
-        <header className={styles.header}>
-          <h1 className={styles.title}>Quiz complete! 🏆</h1>
-          <p className={styles.subtitle}>
-            {categoryLabel}: you answered {deck.length} question
-            {deck.length === 1 ? '' : 's'}. Check your stats to see how you did!
-          </p>
-        </header>
-        <footer className={styles.footer}>
-          <Link className={styles.link} to="/stats">
-            View Stats
-          </Link>
-          <Link className={styles.link} to="/quiz">
-            Play another quiz
-          </Link>
-          <Link className={styles.linkMuted} to="/">
-            Back Home
-          </Link>
-        </footer>
+        <Confetti />
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           className={styles.finishContainer}
+        >
+          <header className={styles.header}>
+            <h1 className={styles.title}>Quiz complete! 🏆</h1>
+            <p className={styles.subtitle}>
+              {categoryLabel}: you answered {deck.length} question
+              {deck.length === 1 ? '' : 's'}. Check your stats to see how you did!
+            </p>
+          </header>
+          <footer className={styles.footer}>
+            <Link className="btn-gamified btn-primary" to="/stats">
+              View Stats
+            </Link>
+            <Link className={styles.link} to="/quiz">
+              Play another quiz
+            </Link>
+            <Link className={styles.linkMuted} to="/">
+              Back Home
+            </Link>
+          </footer>
+        </motion.div>
       </main>
     )
   }
