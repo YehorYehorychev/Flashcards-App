@@ -37,14 +37,18 @@ export function Flashcard({
             aria-pressed={isFlipped}
           >
             <div className={`${styles.flipInner} ${isFlipped ? styles.flipped : ''}`}>
-              <div className={`${styles.face} ${styles.front}`}>
+              <div className={`${styles.face} ${styles.front}`} aria-hidden={isFlipped}>
                 <span className={styles.label}>Ukrainian</span>
-                <p className={styles.word}>{ukranian}</p>
+                <p className={styles.word} lang="uk" aria-live="polite">
+                  {ukranian}
+                </p>
                 <span className={styles.hint}>Tap to flip</span>
               </div>
-              <div className={`${styles.face} ${styles.back}`}>
+              <div className={`${styles.face} ${styles.back}`} aria-hidden={!isFlipped}>
                 <span className={styles.label}>English</span>
-                <p className={styles.word}>{english}</p>
+                <p className={styles.word} aria-live="polite">
+                  {english}
+                </p>
                 <span className={styles.hint}>Tap to flip</span>
               </div>
             </div>
@@ -56,12 +60,13 @@ export function Flashcard({
               animate={{ opacity: 1, y: 0 }}
               className={styles.actions}
               role="group"
-              aria-label="Mark your answer"
+              aria-label="How did you do?"
             >
               <button
                 type="button"
                 className={`btn-gamified btn-success ${styles.btnRight}`}
                 onClick={onRight}
+                autoFocus
               >
                 Got it right
               </button>

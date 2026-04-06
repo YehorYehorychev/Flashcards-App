@@ -96,26 +96,28 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 800; /* Extra bold for premium feel */
   font-size: 16px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 12px 24px;
+  letter-spacing: 0.08em;
+  padding: 14px 28px;
   border-radius: var(--radius-md);
-  border: 2px solid transparent;
+  border: none;
   cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.1s, filter 0.2s;
+  transition: all var(--transition-fast);
   text-decoration: none;
   user-select: none;
+  position: relative;
 }
 
 .btn-gamified:active {
-  transform: translateY(4px);
+  transform: translateY(2px) scale(0.98);
   box-shadow: none !important;
 }
 
 .btn-gamified:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
 .btn-primary {

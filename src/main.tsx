@@ -5,12 +5,16 @@ import { AppProgressProvider } from './context/AppProgressProvider'
 import './index.css'
 import App from './App.tsx'
 
+import { ErrorBoundary } from './components/ErrorBoundary'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <AppProgressProvider>
-        <App />
-      </AppProgressProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AppProgressProvider>
+          <App />
+        </AppProgressProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 )
