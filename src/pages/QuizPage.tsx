@@ -38,9 +38,13 @@ export function QuizPage() {
     [category],
   )
 
+  const SESSION_LIMIT = 15
+
   const deck = useMemo(() => {
     if (!quizType) return []
-    return filterCardsForQuizType(allInCategory, quizType)
+    const matching = filterCardsForQuizType(allInCategory, quizType)
+    // Shuffle and limit the deck
+    return shuffled(matching).slice(0, SESSION_LIMIT)
   }, [allInCategory, quizType])
 
   const [index, setIndex] = useState(0)

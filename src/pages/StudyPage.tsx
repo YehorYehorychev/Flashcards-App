@@ -4,6 +4,7 @@ import { StudySession } from '../components/StudySession'
 import { useAppProgress } from '../context/useAppProgress'
 import type { Category, Flashcard } from '../data/flashcards'
 import { categories, flashcardsByCategory } from '../data/flashcards'
+import { shuffled } from '../lib/shuffle'
 import styles from './StudyPage.module.css'
 
 function isCategory(value: string | undefined): value is Category {
@@ -15,10 +16,14 @@ export function StudyPage() {
   const category = isCategory(categoryId) ? categoryId : null
   const { recordStudyAnswer, finishStudySession } = useAppProgress()
 
-  const cards = useMemo(
-    () => (category ? flashcardsByCategory(category) : []),
-    [category],
-  )
+  const SESSION_LIMIT = 15
+
+  const cards = useMemo(() => {
+    if (!category) return []
+    const all = flashcardsByCategory(category)
+    // Shuffle and limit the session
+    return shuffled(all).slice(0, SESSION_LIMIT)
+  }, [category])
 
   const categoryLabel =
     category && categories.find((c) => c.id === category)?.label
